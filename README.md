@@ -37,7 +37,7 @@ Telegram-бот на базе Telebot для взаимодействия с п�
 Технологии
 
 Язык: Python 3.x
-Библиотеки для бота: Telebot (telebot), SQLite3
-Веб-админка: Flask
+Библиотеки для бота: pyTelegramBotAPI (telebot), SQLite3
+Веб-админка: Flask, html, Jinja2
 База данных: SQLite
 Дополнительно: datetime, math, requests
