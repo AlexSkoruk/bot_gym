@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block body %}
+    <style>
+        .num-confirm {
+            background-color: green;
+        }
+        .num-not-correct {
+            background-color: yellow;
+        }
+        .num-not-confirm {
+            background-color: red;
+        }
+        ul {
+            list-style: none;
+        }
+    </style>
+    <h2>Пользователь {{ info.id }}</h2>
+    <table border="1" cellspacing="10" cellpadding="5">
+        <tr>
+            <th align="left">id</th>
+            <th align="left">tg nickname</th>
+            <th align="left">score</th>
+            <th align="left">sub tg cyber</th>
+            <th align="left">sub tg Dota</th>
+            <th align="left">sub tg DotaToday</th>
+            <th align="left">buk number</th>
+            <th align="left">buk number confirm</th>
+        </tr>
+        <tr>
+            <td>{{ info.id }}</td>
+            {% if info.tag == None %}
+                <td>Тэг скрыт</td>
+            {% else %}
+                <td>{{ info.tag }}</td>
+            {% endif %}
+            <td>{{ info.score }}</td>
+            {% if info.sub_cyber == 0 %}
+                <td>Не подписан</td>
+            {% else %}
+                <td>Подписан</td>
+            {% endif %}
+            {% if info.sub_cs == 0 %}
+                <td>Не подписан</td>
+            {% else %}
+                <td>Подписан</td>
+            {% endif %}
+            {% if info.sub_dota == 0 %}
+                <td>Не подписан</td>
+            {% else %}
+                <td>Подписан</td>
+            {% endif %}
+            {% if info.fonbet_number == None %}
+                <td>Номер не указан</td>
+            {% else %}
+                <td>{{ info.fonbet_number }}</td>
+            {% endif %}
+            {% if info.login_confirm == 1 and info.fonbet_number != None %}
+                <td class="num-confirm">Номер подтверждён</td>
+            {% elif info.login_confirm == 0 and info.fonbet_number != None %}
+                <td class="num-not-confirm">Номер не подтверждён</td>
+            {% else %}
+                <td>Номер не указан</td>
+            {% endif %}
+        </tr>
+    </table>
+    <h3>Отправить сообщение</h3>
+    <form action="send-message" method="post">
+        <select name="what_bot">
+              <!--<option selected disabled>Выбери бота</option>-->
+              <option value="predictor" disabled>Предиктор</option>
+              <option value="quiz" selected>Квиз</option>
+        </select><br><br>
+        <input type="hidden" name="user_page" value="1">
+        <input type="hidden" name="id" value="{{ info.id }}">
+        <textarea name="message" rows=6 cols=50></textarea><br><br>
+        <button type="submit">Отправить</button>
+    </form>
+    <ul>
+    {% for mess in messages %}
+        {% if mess.from_user %}
+            <li><b>User</b>: <span>{{ mess.text }}</span> <i>mess_id: {{mess.id }}</i></li>
+        {% else %}
+            <li><b>Bot</b>: <span>{{ mess.text }}</span> <i>mess_id: {{mess.id }}</i></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endblock %}

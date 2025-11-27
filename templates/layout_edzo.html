@@ -1,0 +1,27 @@
+<!doctype html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--<script type="text/javascript">
+          var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/script.js') }}"></script>-->
+<title>Edzo Bot</title>
+<!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">-->
+<div class=page>
+  <h1>Edzo Bot</h1>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <div class="metanav">
+    {% if session.edzo_logged_in %}
+	    <div class="menu">
+            <a href="{{ url_for('edzo_logout') }}">Выйти</a><br>
+    	    <a href="{{ url_for('coaches') }}">Тренеры</a>
+    	    <a href="{{ url_for('students') }}">Спортсмены</a>
+	    </div>
+	{% endif %}
+  </div>
+  <div class=flash>
+  {% for message in get_flashed_messages() %}
+    {{ message }}
+  {% endfor %}
+  </div>
+  {% block body %}{% endblock %}
+</div>

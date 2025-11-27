@@ -1,0 +1,16 @@
+{% extends "layout_edzo.html" %}
+{% block body %}
+  <h2>Вход в личный кабинет</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('edzo_login') }}" method=post>
+    <label>Логин:</label>
+	<br>
+    <input type=text name=username>
+	<br>
+    <label>Пароль:</label>
+	<br>
+    <input type=password name=password>
+	<br>
+    <input type=submit value=Войти>
+  </form>
+{% endblock %}

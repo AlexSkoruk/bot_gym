@@ -1,0 +1,75 @@
+{% extends "layout_edzo.html" %}
+{% block body %}
+    <style>
+    </style>
+    <h2>Тренеры</h2>
+    <table border="1" cellpadding="10" cellspacing="10">
+    	<tr>
+    		<td>ID</td>
+    		<td>Телеграм-тэг</td>
+    		<td>Дата добавления</td>
+    		<td>Контакт</td>
+    		<td>ФИО</td>
+    		<td>Адрес зала</td>
+    		<td>Количество учеников</td>
+    		<td>Набирает учеников</td>
+    		<td colspan="2">Квалификация подтверждена</td>
+    	</tr>
+	    {% for coach in coaches %}
+	    <tr>
+	    	<td>
+	    		<a href="coach?id={{ coach.id }}" target="_blank">{{ coach.id }}</a>
+	    	</td>
+	    	<td>
+	    		{{ coach.tag }}
+	    	</td>
+	    	<td>
+	    		{{ coach.date }}
+	    	</td>
+	    	<td>
+	    		{{ coach.contact }}
+	    	</td>
+	    	<td>
+	    		{{ coach.fio }}
+	    	</td>
+	    	<td>
+	    		<br>
+			{% for i in coach.locations %}
+	    			{{ i }}<br>
+			{% endfor %}
+	    	</td>
+	    	<td>
+	    		{{ coach.students_count }}
+	    	</td>
+	    	<td>
+	    		{% if coach.active_coach %}
+	    			Да
+	    		{% else %}
+	    			Нет
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if coach.approve_coach %}
+	    			Да
+	    			</td>
+	    			<td>
+	    				<form action="/deapprove" method="GET">
+	    					<input type="hidden" name="id" value="{{ coach.id }}">
+	    					<input type="hidden" name="approve" value="0">
+	    					<input type="submit" value="Снять подтверждение">
+	    				</form>
+	    		{% else %}
+	    			Нет
+	    			</td>
+	    			<td>
+	    				<form action="/approve" method="GET">
+	    					<input type="hidden" name="id" value="{{ coach.id }}">
+	    					<input type="hidden" name="approve" value="1">
+	    					<input type="submit" value="Подтвердить">
+	    				</form>
+	    		{% endif %}
+	    	</td>
+	    </tr>
+  		{% endfor %}
+  	</table>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout_edzo.html" %}
+{% block body %}
+    <style>
+    </style>
+    <h2>Отзывы тренеров</h2>
+    <table border="1" cellpadding="10" cellspacing="10">
+    	<tr>
+    		<td>ID тренера</td>
+    		<td>ID спортсмена</td>
+    		<td>ID мэтча</td>
+    		<td>Ученик связался</td>
+    		<td>Первая тренировка</td>
+    		<td>Оценка</td>
+    		<td>Текст отзыва</td>
+    	</tr>
+	    {% for review in reviews %}
+	    <tr>
+	    	<td>
+	    		<a href="/edzo/coach?id={{ review.coach_id }}" target="_blank">{{ review.coach_id }}</a>
+	    	</td>
+	    	<td>
+	    		{{ review.student_id }}
+	    	</td>
+	    	<td>
+	    		{{ review.id }}
+	    	</td>
+	    	<td>
+	    		{% if review.contact %}
+	    			Связался
+	    		{% else %}
+	    			Не связался
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.first_train %}
+	    			Состоялась
+	    		{% else %}
+	    			Не состоялась
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.rate %}
+	    			review.rate
+	    		{% else %}
+	    			Нет оценки
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.review %}
+	    			review.review
+	    		{% else %}
+	    			Нет отзыва
+	    		{% endif %}
+	    	</td>
+	    </tr>
+  		{% endfor %}
+  	</table>
+{% endblock %}

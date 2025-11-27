@@ -1,0 +1,88 @@
+{% extends "layout_edzo.html" %}
+{% block body %}
+    <style>
+    </style>
+    <h2>Отзывы спортсменов</h2>
+    <table border="1" cellpadding="10" cellspacing="10">
+    	<tr>
+    		<td>ID спортсмена</td>
+    		<td>ID тренера</td>
+    		<td>ID мэтча</td>
+    		<td>Связался с тренером</td>
+    		<td>Не связался причина</td>
+    		<td>Договорился о тренировке</td>
+    		<td>Не договорился причина</td>
+    		<td>Первая тренировка</td>
+    		<td>Хочет оставить отзыв</td>
+    		<td>Текст отзыва</td>
+    	</tr>
+	    {% for review in reviews %}
+	    <tr>
+	    	<td>
+	    		{{ review.student_id }}
+	    	</td>
+	    	<td>
+	    		<a href="/edzo/coach?id={{ review.coach_id }}" target="_blank">{{ review.coach_id }}</a>
+	    	</td>
+	    	<td>
+	    		{{ review.id }}
+	    	</td>
+	    	<td>
+	    		{% if review.contact %}
+	    			Связался
+	    		{% else %}
+	    			Не связался
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.contact_no == -1 %}
+	    			Тренер не отвечает
+	    		{% elif review.contact_no == 0 %}
+	    			Передумал
+	    		{% elif review.contact_no == 1 %}
+	    			Некогда
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.arrange_train == 1 %}
+	    			Да
+	    		{% elif review.arrange_train == 0 %}
+	    			Нет
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.arrange_train_no == 1 %}
+	    			У тренера нет свободного времени
+	    		{% elif review.arrange_train_no == 2 %}
+	    			Не понравилась коммуникация
+	    		{% elif review.arrange_train_no == 3 %}
+	    			Я передумал(а) заниматься
+	    		{% elif review.arrange_train_no == 4 %}
+	    			Другое
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.first_train == 1 %}
+	    			Была
+	    		{% elif review.first_train == 0 %}
+	    			Не было
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.want_review == 1 %}
+	    			Да
+	    		{% else %}
+	    			Нет
+	    		{% endif %}
+	    	</td>
+	    	<td>
+	    		{% if review.review %}
+	    			review.review
+	    		{% else %}
+	    			Нет отзыва
+	    		{% endif %}
+	    	</td>
+	    </tr>
+  		{% endfor %}
+  	</table>
+{% endblock %}

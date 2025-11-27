@@ -1,0 +1,137 @@
+{% extends "layout_edzo.html" %}
+{% block body %}
+    <style>
+    	body {
+    		width: 1200px;
+    		font-size: 18px;
+    		line-height: 1.5;
+    	}
+    	.left, .right {
+    		width: 50%;
+    		float: left;
+    	}
+    	p {
+    		margin: 0.4em 0;
+    	}
+    </style>
+    <h2>Карточка тренера</h2>
+    	<div class="left">
+    		<h3>Фото квалификации</h3>
+    		{% if user_data.qual_photo %}
+    			{% for img in user_data.qual_photo %}
+    				<img src="{{ url_for('images', filename = img) }}" width="500">
+    				<br>
+    			{% endfor %}
+    		{% else %}
+    		<p>
+    			Нет фото
+    		</p>
+    		{% endif %}
+    		<h3>Личные фото</h3>
+    		{% if user_data.self_photo %}
+    			{% for img in user_data.self_photo %}
+    				<img src="{{ url_for('images', filename = img) }}" width="500">
+    				<br>
+    			{% endfor %}
+    		{% else %}
+    		<p>
+    			Нет фото
+    		</p>
+    		{% endif %}
+    	</div>
+    	<div class="right">
+    		<h3>Информация</h3>
+    		<p>
+    			<b>ФИО:</b>
+    			<br>
+    			{{ user_data.fio }}
+    		</p>
+    		<p>
+    			<b>Дата рождения:</b>
+    			<br>
+    			{{ user_data.birthday }}
+    		</p>
+    		<p>
+    			<b>ID:</b>
+    			<br>
+    			{{ user_data.id }}
+    		</p>
+    		<p>
+    			<b>Телеграм тэг:</b>
+    			<br>
+    			{{ user_data.tag }}
+    		</p>
+    		<p>
+    			<b>Дата добавления:</b>
+    			<br>
+    			{{ user_data.date }}
+    		</p>
+    		<p>
+    			<b>Квалификация:</b>
+    			<br>
+    			{{ user_data.bio_text }}
+    		</p>
+    		<p>
+    			<b>Квалификация подтверждена:</b>
+    			{% if user_data.approve_coach %}
+    				<br>
+	    			Да
+	    			<br>
+	    			<form action="/deapprove?coach=1" method="GET">
+	    				<input type="hidden" name="id" value="{{ user_data.id }}">
+	    				<input type="hidden" name="approve" value="0">
+	    				<input type="hidden" name="coach" value="1">
+	    				<input type="submit" value="Снять подтверждение">
+	    			</form>
+	    		{% else %}
+	    			<br>
+	    			Нет
+	    			<br>
+	    			<form action="/approve" method="GET">
+	    				<input type="hidden" name="id" value="{{ user_data.id }}">
+	    				<input type="hidden" name="approve" value="1">
+	    				<input type="hidden" name="coach" value="1">
+	    				<input type="submit" value="Подтвердить">
+	    			</form>
+	    		{% endif %}
+    		</p>
+    		<p>
+    			<b>Цели тренировок:</b>
+    			{% for target in user_data.targets %}
+    				<br>
+    				{{ target }};
+    			{% endfor %}
+    		</p>
+    		<p>
+    			<b>Адрес зала:</b>
+    			<br>
+			{% for i in user_data.locations %}
+	    			{{ i }}<br>
+			{% endfor %}
+    		</p>
+    		<p>
+    			<b>О себе:</b>
+    			<br>
+    			{{ user_data.about_you }}
+    		</p>
+    		<p>
+    			<b>Ссылки на соцсети:</b>
+    			<br>
+    			{{ user_data.self_link }}
+    		</p>
+    		<p>
+    			<b>Набирает учеников:</b>
+    			<br>
+    			{% if user_data.active_coach %}
+	    			Да
+	    		{% else %}
+	    			Нет
+	    		{% endif %}
+    		</p>
+    		<p>
+    			<b>Количество учеников:</b>
+    			<br>
+    			{{ user_data.students_count }}
+    		</p>
+    	</div>
+{% endblock %}
